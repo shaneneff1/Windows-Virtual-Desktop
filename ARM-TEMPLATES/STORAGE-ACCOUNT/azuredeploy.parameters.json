@@ -13,6 +13,9 @@
         },
         "containerName": {
             "value": "nestedtemplates"
+        },
+        "containerName2": {
+            "value": "artifacts"
         }
     }
 }
