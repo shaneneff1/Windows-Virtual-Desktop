@@ -14,25 +14,25 @@
                 "description": "Specifies the Azure location where the key vault should be created."
             }
         },
-        "applicationgroups_s3rushp2": {
+        "applicationgroups_neffwvdhp2": {
             "type": "String",
             "metadata": {
                 "description": "Specifies the application group that is added to the workspace."
             }
         },
-        "applicationgroups_s3rushp1": {
+        "applicationgroups_neffwvdhp1": {
             "type": "String",
             "metadata": {
                 "description": "Specifies the application group that is added to the workspace."
             }
         },
-        "applicationgroups_s3rushp4": {
+        "applicationgroups_neffwvdhp4": {
             "type": "String",
             "metadata": {
                 "description": "Specifies the application group that is added to the workspace."
             }
         },
-        "applicationgroups_s3rushp3": {
+        "applicationgroups_neffwvdhp3": {
             "type": "String",
             "metadata": {
                 "description": "Specifies the application group that is added to the workspace."
@@ -48,10 +48,10 @@
             "location": "[parameters('location')]",
             "properties": {
                 "applicationGroupReferences": [
-                    "[parameters('applicationgroups_s3rushp2')]",
-                    "[parameters('applicationgroups_s3rushp1')]",
-                    "[parameters('applicationgroups_s3rushp4')]",
-                    "[parameters('applicationgroups_s3rushp3')]"
+                    "[parameters('applicationgroups_neffwvdhp2')]",
+                    "[parameters('applicationgroups_neffwvdhp1')]",
+                    "[parameters('applicationgroups_neffwvdhp4')]",
+                    "[parameters('applicationgroups_neffwvdhp3')]"
                 ]
             }
         }

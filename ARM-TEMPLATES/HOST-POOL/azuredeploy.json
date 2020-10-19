@@ -19,7 +19,7 @@
             "metadata": {
                 "description": "The name of the workspace."
             },
-            "defaultValue": "s3rus"
+            "defaultValue": "neffwvd"
         },
         "hostpoolName": {
             "type": "string",

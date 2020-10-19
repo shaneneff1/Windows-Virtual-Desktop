@@ -436,7 +436,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://sts3rus.blob.core.windows.net/artifacts/install-application.ps1?si=access&sv=2019-12-12&sr=b&sig=Ej73MZM4LErcKKMeJrowFBmC71iFVOOQWS1YS31UP5U%3D"
+                        "https://stneffwvd.blob.core.windows.net/artifacts/install-application.ps1?si=access&sv=2019-12-12&sr=b&sig=Ej73MZM4LErcKKMeJrowFBmC71iFVOOQWS1YS31UP5U%3D"
                     ],
                     "timestamp": "123456789"
                 },

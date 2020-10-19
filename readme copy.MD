@@ -1,8 +1,8 @@
-# Republic Air- S3RUS Solution Overview
+# Republic Air- neffwvd Solution Overview
 
 **DRAFT DIAGRAM- MANY CHANGES SINCE PROJECT STARTED. WILL BE UPDATED BY 10/19**
 
-![S3RUS](./images/s3rus-arch.png)
+![neffwvd](./images/neffwvd-arch.png)
 
 ---
 
@@ -15,14 +15,14 @@
 
 ---
 ## SOLUTION OVERVIEW
-This solution is to deploy a [Windows Virtual Desktop](https://docs.microsoft.com/en-us/azure/virtual-desktop/) instance to Republic Air's Azure environment to support the S3RUS application. The following Azure resources are provisioned:
+This solution is to deploy a [Windows Virtual Desktop](https://docs.microsoft.com/en-us/azure/virtual-desktop/) instance to Republic Air's Azure environment to support the neffwvd application. The following Azure resources are provisioned:
 :
 - [**Azure Key Vault**](https://docs.microsoft.com/en-us/azure/key-vault/basic-concepts)- Used to store user account and password of account used to domain join virtual machines.
 - [**Windows Virtual Desktop Host Pool**](https://docs.microsoft.com/en-us/azure/virtual-desktop/create-host-pools-azure-marketplace ) 
 - [**Windows Virtual Desktop Application Group**](https://docs.microsoft.com/en-us/azure/virtual-desktop/manage-app-groups) The application group includes the desktop application group by default, and this is where users/groups are assigned applications. The only published applications are session desktops from each of the host pools. These four application groups are added to the Workspace during the last stage of the pipeline.
 - [**Windows Virtual Desktop Workspace**](https://docs.microsoft.com/en-us/azure/virtual-desktop/environment-setup#workspaces): User workspace that includes all of the application groups that have been assigned to the user. All four application groups created by the deployments of the host pools are added to the **one** workspace used for this resources. This allows the user to be presented with four possible sessions to launch.
 
-![S3RUS](./images/s3rus-workspace.png)
+![neffwvd](./images/neffwvd-workspace.png)
 
 
 - [**Azure Storage Account**](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview)  Used to store the application installation and update executables. There are two containers: artifacts, which contains the configuration.zip file referenced for the configuration of the service, and "nestedtemplates." [Nested Tempates](https://github.com/Azure/RDS-Templates/tree/master/ARM-wvd-templates/nestedtemplates) is a copy of the ARM templates for each of the four VM types (gallery, custom, etc.) from the Microsoft/Azure owned public Git Hub repository for Windows Virtual Desktop: https://github.com/Azure/RDS-Templates/tree/master/wvd-templates There are two types of Windows Virtual Desktop deployments: "Classic," and "ARM." The ARM deployment model templates are the ones that were modified and used for this solution.
@@ -32,7 +32,7 @@ This solution is to deploy a [Windows Virtual Desktop](https://docs.microsoft.co
 - - Four System Assigned Managed IDs are created as part of this solution/deployment and assigned the "Contributor" role for the resource group. These Managed IDs are used by each of the auto-scaling Function Apps to stop/start VMs. The life cycle management of these Managed IDs is tied to the resource they are associated with. When the resources are deleted, the IDs will automatically be removed as well.
   
 
-  ![System Assigned Managed ID](./images/s3rus-rbac.png) 
+  ![System Assigned Managed ID](./images/neffwvd-rbac.png) 
 
 - [**Azure App Service Plan***](https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans) This provides the hosting resources necessary for the Azure Function app. There are four of these resources; one for each hosting pool. Each are configured as: Windows OS and [Consumption pricing plan/Y1: 0](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#app-service-limits)
 
@@ -52,36 +52,36 @@ Overview: There is only one pipeline for this application. This pipeline creates
 - All parameters are defined in the appropriate azuredeploy.parameters.json files.
 - The pipeline is triggered by a pull request/merge to the master branch. Each task completion automatically triggers the start of the next task.
 
-- The pipeline has been exported as a .json file and can be found in the repository as [bkup-10-18-2020.json](https://dev.azure.com/republicairways/AzureApp01/_git/S3RUS?path=%2FPIPELINE-BACKUP%2Fbkup-10-18-2020.json)
+- The pipeline has been exported as a .json file and can be found in the repository as [bkup-10-18-2020.json](https://dev.azure.com/republicairways/AzureApp01/_git/neffwvd?path=%2FPIPELINE-BACKUP%2Fbkup-10-18-2020.json)
 
 - There are branch policies in place that require pull request approval prior to being committed to the master branch. A minimum of one approver is required, and at the time of this writing, those that are defined as approvers are allowed to approve their own requests. It is recommended to require two approvers and one of them can't be the person that created the pull request.
 
-![S3RUS Release Pipeline](./images/s3rus-branch-policy.png)
+![neffwvd Release Pipeline](./images/neffwvd-branch-policy.png)
 - There are seven steps in the release pipeline
 
-![S3RUS Release Pipeline](./images/s3rus-pipeline.png)
+![neffwvd Release Pipeline](./images/neffwvd-pipeline.png)
 
 1. Stop Auto-Scaling Function Apps- Simple PowerShell script used to stop all of the Azure Function Apps that automatically scale up/down the session host VMs. If these are not stopped, they will continue to power off unneeded hosts. 
    
   ```powershell
-  Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp1-func
-Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp2-func
-Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp3-func
-Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp4-func 
+  Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp1-func
+Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp2-func
+Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp3-func
+Stop-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp4-func 
 ```
 
 
 2. Start All VMs- Simple PowerShell script that ensures all VMs are powered on. All VMs must be running as the deployment is unable to update non-running VMs.
    
 ```powershell 
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp1-0 -NoWait
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp1-1 -NoWait
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp2-0 -NoWait
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp2-1 -NoWait
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp3-0 -NoWait
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp3-1 -NoWait
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp4-0 -NoWait
-Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp4-1
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp1-0 -NoWait
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp1-1 -NoWait
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp2-0 -NoWait
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp2-1 -NoWait
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp3-0 -NoWait
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp3-1 -NoWait
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp4-0 -NoWait
+Start-AzVM -ResourceGroupName az-eus2-prod-s3cpo-rg -Name neffwvdhp4-1
 ```
 
 
@@ -94,7 +94,7 @@ steps:
   displayName: 'Power down VM scale-up/scale-down function app'
   inputs:
 azureSubscription: 'SC-Prod-Pipeline'
-ScriptPath: '$(System.DefaultWorkingDirectory)/_S3RUS/SCRIPTS/stop-function-app.ps1'
+ScriptPath: '$(System.DefaultWorkingDirectory)/_neffwvd/SCRIPTS/stop-function-app.ps1'
 azurePowerShellVersion: LatestVersion
 ```
 
@@ -105,10 +105,10 @@ steps:
 - task: AzureFileCopy@4
   displayName: 'File Copy: Nested Template from Repo to Storage Account'
   inputs:
-    SourcePath: '$(System.DefaultWorkingDirectory)/_S3RUS/ARM-TEMPLATES/VM-BUILD/managedDisks-galleryvm.json'
+    SourcePath: '$(System.DefaultWorkingDirectory)/_neffwvd/ARM-TEMPLATES/VM-BUILD/managedDisks-galleryvm.json'
     azureSubscription: 'SC-Prod-Pipeline'
     Destination: AzureBlob
-    storage: sts3rus
+    storage: stneffwvd
     ContainerName: nestedtemplates
 ```
 
@@ -123,8 +123,8 @@ steps:
     subscriptionId: 'c1f8f29c-140e-44bb-803a-df7846a1931f'
     resourceGroupName: 'az-eus2-prod-s3cpo-rg'
     location: 'East US 2'
-    csmFile: '$(System.DefaultWorkingDirectory)/_S3RUS/ARM-TEMPLATES/HOST-POOL/azuredeploy.json'
-    csmParametersFile: '$(System.DefaultWorkingDirectory)/_S3RUS/ARM-TEMPLATES/HOST-POOL/azuredeploy.parameters.hostpool-1.json'
+    csmFile: '$(System.DefaultWorkingDirectory)/_neffwvd/ARM-TEMPLATES/HOST-POOL/azuredeploy.json'
+    csmParametersFile: '$(System.DefaultWorkingDirectory)/_neffwvd/ARM-TEMPLATES/HOST-POOL/azuredeploy.parameters.hostpool-1.json'
 ```
 
 - Deploys the host session scaling function app
@@ -138,8 +138,8 @@ steps:
     subscriptionId: 'c1f8f29c-140e-44bb-803a-df7846a1931f'
     resourceGroupName: 'az-eus2-prod-s3cpo-rg'
     location: 'East US 2'
-    csmFile: '$(System.DefaultWorkingDirectory)/_S3RUS/ARM-TEMPLATES/HOST-POOL/azuredeploy.json'
-    csmParametersFile: '$(System.DefaultWorkingDirectory)/_S3RUS/ARM-TEMPLATES/HOST-POOL/azuredeploy.parameters.hostpool-1.json'
+    csmFile: '$(System.DefaultWorkingDirectory)/_neffwvd/ARM-TEMPLATES/HOST-POOL/azuredeploy.json'
+    csmParametersFile: '$(System.DefaultWorkingDirectory)/_neffwvd/ARM-TEMPLATES/HOST-POOL/azuredeploy.parameters.hostpool-1.json'
 ```
 
 1. "Host Pool 2 Deployment" (see step three)
@@ -155,10 +155,10 @@ steps:
             "location": "[parameters('location')]",
             "properties": {
                 "applicationGroupReferences": [
-                    "[parameters('applicationgroups_s3rushp2')]",
-                    "[parameters('applicationgroups_s3rushp1')]",
-                    "[parameters('applicationgroups_s3rushp4')]",
-                    "[parameters('applicationgroups_s3rushp3')]"
+                    "[parameters('applicationgroups_neffwvdhp2')]",
+                    "[parameters('applicationgroups_neffwvdhp1')]",
+                    "[parameters('applicationgroups_neffwvdhp4')]",
+                    "[parameters('applicationgroups_neffwvdhp3')]"
                 ]
             }
         }
@@ -172,7 +172,7 @@ steps:
 ## REFERENCE: DEPLOYMENT INSTRUCTIONS
 To begin a release deployment
 - Visit the [Azure DevOps project for this implementation](https://dev.azure.com/republicairways/AzureApp01). 
-- Click on "Pipelines," then "Releases." The release that includes the WVD deployment tasks is called "Deploy S3RUS WVD." 
+- Click on "Pipelines," then "Releases." The release that includes the WVD deployment tasks is called "Deploy neffwvd WVD." 
 - Click on "Create Release." This release takes 30-40 minutes on average to complete.
 
 
@@ -207,14 +207,14 @@ There are many reasons a pipeline run can fail. This section provides some infor
 - **Service Principal:** az-rjet-prod-sc-devops-spn
 - **Service Principal ClientID:** afca89bc-895a-4d6d-a277-cc3938952e5a
 - **Service Principal ObjectID:** fd3fbfd9-a1ee-49b1-9db1-e9a3eeaea8e5
-- **Production Key Vault Resource ID:** /subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.KeyVault/vaults/s3rus-kv
+- **Production Key Vault Resource ID:** /subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.KeyVault/vaults/neffwvd-kv
 - **Windows AD Join user account password Secret Name in Key Vault:** ad-pswd
-- **Storage account:** sts3rus
-- **s3rushp1-0-nic MAC Address:** 00-0D-3A-0D-DA-F1
-- **s3rushp1-1-nic MAC Address:** 00-0D-3A-0D-D6-E2
-- **s3rushp2-0-nic MAC Address:** 00-0D-3A-0F-90-E3
-- **s3rushp2-1-nic MAC Address:** 00-0D-3A-0F-92-FB
-- **s3rushp3-0-nic MAC Address:** 00-0D-3A-E5-A5-7F
-- **s3rushp3-1-nic MAC Address:** 00-0D-3A-E5-A5-01
-- **s3rushp4-0-nic MAC Address:** 00-0D-3A-0F-F5-67
-- **s3rushp4-1-nic MAC Address:** 00-0D-3A-0F-F8-F7
+- **Storage account:** stneffwvd
+- **neffwvdhp1-0-nic MAC Address:** 00-0D-3A-0D-DA-F1
+- **neffwvdhp1-1-nic MAC Address:** 00-0D-3A-0D-D6-E2
+- **neffwvdhp2-0-nic MAC Address:** 00-0D-3A-0F-90-E3
+- **neffwvdhp2-1-nic MAC Address:** 00-0D-3A-0F-92-FB
+- **neffwvdhp3-0-nic MAC Address:** 00-0D-3A-E5-A5-7F
+- **neffwvdhp3-1-nic MAC Address:** 00-0D-3A-E5-A5-01
+- **neffwvdhp4-0-nic MAC Address:** 00-0D-3A-0F-F5-67
+- **neffwvdhp4-1-nic MAC Address:** 00-0D-3A-0F-F8-F7
