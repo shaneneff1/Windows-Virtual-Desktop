@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "applicationName": {
+            "type": "String",
+            "metadata": {
+                "description": "Specifies the application name."
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the Azure location where the key vault should be created."
+            }
+        },
+        "applicationgroups_s3rushp2": {
+            "type": "String",
+            "metadata": {
+                "description": "Specifies the application group that is added to the workspace."
+            }
+        },
+        "applicationgroups_s3rushp1": {
+            "type": "String",
+            "metadata": {
+                "description": "Specifies the application group that is added to the workspace."
+            }
+        },
+        "applicationgroups_s3rushp4": {
+            "type": "String",
+            "metadata": {
+                "description": "Specifies the application group that is added to the workspace."
+            }
+        },
+        "applicationgroups_s3rushp3": {
+            "type": "String",
+            "metadata": {
+                "description": "Specifies the application group that is added to the workspace."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.DesktopVirtualization/workspaces",
+            "apiVersion": "2019-12-10-preview",
+            "name": "[parameters('applicationName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "applicationGroupReferences": [
+                    "[parameters('applicationgroups_s3rushp2')]",
+                    "[parameters('applicationgroups_s3rushp1')]",
+                    "[parameters('applicationgroups_s3rushp4')]",
+                    "[parameters('applicationgroups_s3rushp3')]"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,80 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "applicationName": {
+            "value": "S3RUS"
+        },
+        "certificatePermissions": {
+            "value": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "ManageContacts",
+                "ManageIssuers",
+                "GetIssuers",
+                "ListIssuers",
+                "SetIssuers",
+                "DeleteIssuers"
+            ]
+        },
+        "enabledForDeployment": {
+            "value": true
+        },
+        "enabledForDiskEncryption": {
+            "value": false
+        },
+        "enablePurgeProtection": {
+            "value": true
+        },
+        "enabledForTemplateDeployment": {
+            "value": true
+        },
+        "enableSoftDelete": {
+            "value": false
+        },
+        "keysPermissions": {
+            "value": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore"
+            ]
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "objectId": {
+            "value": 
+                "1e2251b6-dc06-4de5-9724-ebc812689e63"
+        },
+        "secretsPermissions": {
+            "value": [
+                "Get",
+                "List",
+                "Set",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore"
+            ]
+        },
+        "skuName": {
+            "value": "Standard"
+        },
+        "tenantId": {
+            "value": "2ebb9fda-6f05-43ed-8507-e83c949691ac"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "applicationName": {
+            "value": "S3RUS"
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "applicationgroups_s3rushp2": {
+            "value": "/subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.DesktopVirtualization/applicationgroups/s3rushp2-DAG"
+        },
+        "applicationgroups_s3rushp1": {
+            "value": "/subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.DesktopVirtualization/applicationgroups/s3rushp1-DAG"
+        },
+        "applicationgroups_s3rushp4": {
+            "value": "/subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.DesktopVirtualization/applicationgroups/s3rushp4-DAG"
+        },
+        "applicationgroups_s3rushp3": {
+            "value": "/subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.DesktopVirtualization/applicationgroups/s3rushp3-DAG"
+        }
+    }
+}

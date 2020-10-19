@@ -1,0 +1,85 @@
+
+S3CPO install order
+& '\\azfileppr01\source\S3cpo-2020-10-02\CrewPlanning20200912\S3RUSCrewPlanningSystemSetup.msi' -quiet
+& '\\azfileppr01\source\S3cpo-2020-10-02\PairingEditor20200726\S3RUSPairingEditorSetup.msi' -quiet
+
+# install update 10/1:
+& '\\azfileppr01\source\S3cpo-2020-10-02\2020_09 S3RUS System Update_mt.exe' -silent
+
+#update file 10/7 on each machine: - probably not required since files all had the same hash
+copy-item '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\2020-10-02\cpaddress.aes' '\\s3cpo-06\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles'
+copy-item '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\2020-10-02\cpaddress.aes' '\\s3cpo-05\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles'
+copy-item '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\2020-10-02\cpaddress.aes' '\\s3cpo-04\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles'
+copy-item '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\2020-10-02\cpaddress.aes' '\\s3cpo-03\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles'
+copy-item '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\2020-10-02\cpaddress.aes' '\\s3cpo-02\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles'
+copy-item '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\2020-10-02\cpaddress.aes' '\\s3cpo-01\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles'
+
+#install OneDrive client
+& '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\OneDriveSetup.exe /allusers'
+
+#need Notepad++ installed - 32 bit
+# this did not work:  I think because of computer access to the share - trying to fix
+Invoke-Command -computer s3cpo-01 -ScriptBlock { & '\\sccm01\Application Sourcefiles\notepad++\npp.7.9.Installer.exe' /S}
+
+#tableau reader:
+& '\\corporate.rjet.com\archive\Install\Tableau Reader\TableauReader-64bit-2020-3-0.exe' /quiet /norestart ACCEPTEULA=1 
+import registry template file
+"C:\Program Files\Tableau\Tableau Reader 2020.3\bin\tabreader.exe -register" 
+
+#install FreeCommander:
+FreeCommanderXE-32-public_810a.msi
+
+#on each machine: - ideally a source file with lines filled out - just place - Union file not same as RJET
+\\s3cpo-01\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\Users\Users.txt
+add new line "planning"
+
+Add-Content -Path '\\s3cpo-01\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\Users\Users.txt'  -Value 'planning'
+Add-Content -Path '\\s3cpo-02\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\Users\Users.txt'  -Value 'planning'
+Add-Content -Path '\\s3cpo-03\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\Users\Users.txt'  -Value 'planning'
+Add-Content -Path '\\s3cpo-04\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\Users\Users.txt'  -Value 'planning'
+Add-Content -Path '\\s3cpo-05\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\Users\Users.txt'  -Value 'planning'
+Add-Content -Path '\\s3cpo-06\c$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\Users\Users.txt'  -Value 'planning'
+
+
+Invoke-Command -computer s3cpo-01 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Republic"}
+Invoke-Command -computer s3cpo-02 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Republic"}
+Invoke-Command -computer s3cpo-03 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Republic"}
+Invoke-Command -computer s3cpo-04 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Republic"}
+Invoke-Command -computer s3cpo-05 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Republic"}
+Invoke-Command -computer s3cpo-06 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Republic"}
+
+Invoke-Command -computer s3cpo-05 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Union"}
+Invoke-Command -computer s3cpo-06 -ScriptBlock {Add-LocalGroupMember -Group "Remote Desktop Users" -Member "CORPORATE\S3CPO-Union"}
+
+MAC:
+00:50:56:11:11:01
+00:50:56:11:11:02
+00:50:56:11:11:03
+00:50:56:11:11:04
+00:50:56:11:11:05
+00:50:56:11:11:06
+
+#
+Mike's comments about the setup on the machine:
+Craig,
+
+The setup is for a new month’s schedule. The typical process is to simply copy the previous month and renaming to the new month, then deleting out the previous month’s solutions – essentially just copying over the shell of the previous month,
+
+Example: Copy “C:\s3rus\2020_10” folder to C:\s3rus\, creating “c:\s3rus\2020_10 – Copy”, then simply rename to “2020_11”, and remove the previous month’s solutions from the new folder(s).
+
+Then she will copy in the new schedule files (ssim files received from mainline). Reformat those (using our system) to our format, update the menu items with the proper base constraints, validate the rules for changes, etc. – essentially everything that she alone will be responsible for. Then all she needs to do is disseminate the 2020_11 folder to all the planners using the system. 
+
+If the machines are synced via one drive, then of course this will be automatic.
+
+_Mike
+
+
+
+# new set of "data files"
+# expecting this to need updated from time to time
+robocopy '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\New Files' '\\s3cpo-01\C$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles' /R:1 /W:1
+robocopy '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\New Files' '\\s3cpo-02\C$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles' /R:1 /W:1
+robocopy '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\New Files' '\\s3cpo-03\C$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles' /R:1 /W:1
+robocopy '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\New Files' '\\s3cpo-04\C$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles' /R:1 /W:1
+robocopy '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\New Files' '\\s3cpo-05\C$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles' /R:1 /W:1
+robocopy '\\corporate.rjet.com\archive\Install\S3RUS\S3 Crew Pairing\New Files' '\\s3cpo-06\C$\Program Files (x86)\S3RUS\S3RUS Crew Planning System\DataFiles' /R:1 /W:1

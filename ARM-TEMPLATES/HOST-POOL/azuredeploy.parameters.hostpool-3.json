@@ -1,0 +1,167 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "hostpoolName": {
+            "value": "s3rushp3"
+        },
+        "hostpoolFriendlyName": {
+            "value": "s3rushp3"
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "hostpoolDescription": {
+            "value": "Pool of desktop resources"
+        },
+        "allApplicationGroupReferences": {
+            "value": ""
+        },
+        "workspaceResourceGroup": {
+            "value": "az-eus2-prod-s3cpo-rg"
+        },
+        "workSpaceName": {
+            "value": "s3rus"
+        },
+        "addToWorkspace": {
+            "value": true
+        },
+        "workspaceLocation": {
+            "value": "eastus2"
+        },
+        "artifactsLocation": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.KeyVault/vaults/s3rus-kv"
+                },
+                "secretName": "config-app-saskey"
+            }
+        },
+        "vmNamePrefix": {
+            "value": "s3rushp3"
+        },
+        "objectId": {
+            "value": "97ddf66a-337f-4887-8989-f93778d3fb27"
+        },
+        "subscriptionId": {
+            "value": "c1f8f29c-140e-44bb-803a-df7846a1931f"
+        },
+        "nestedTemplatesLocation": {
+            "value": "https://sts3rus.blob.core.windows.net/nestedtemplates/"
+ 
+        },
+        "apiVersion": {
+            "value": "2019-12-10-preview"
+        },
+        "administratorAccountUsername": {
+            "value": "svc_wvd_domjoin@rjet.com"
+        },
+        "administratorAccountPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/c1f8f29c-140e-44bb-803a-df7846a1931f/resourceGroups/az-eus2-prod-s3cpo-rg/providers/Microsoft.KeyVault/vaults/s3rus-kv"
+                },
+                "secretName": "ad-pswd"
+            }
+        },
+        "createAvailabilitySet": {
+            "value": true
+        },
+        "vmResourceGroup": {
+            "value": "az-eus2-prod-s3cpo-rg"
+        },
+        "vmSize": {
+            "value": "Standard_B2ms"
+        },
+        "vmNumberOfInstances": {
+            "value": 2
+        },
+        "vmImageType": {
+            "value": "Gallery"
+        },
+        "vmGalleryImageOffer": {
+            "value": "windows-10"
+        },
+        "createNetworkSecurityGroup": {
+            "value": false
+        },
+        "vmGalleryImagePublisher": {
+            "value": "MicrosoftWindowsDesktop"
+        },
+        "storageAccountResourceGroupName": {
+            "value": ""
+        },
+        "vmGalleryImageSKU": {
+            "value": "20h1-evd"
+        },
+        "vmImageVhdUri": {
+            "value": ""
+        },
+        "vmCustomImageSourceId": {
+            "value": ""
+        },
+        "vmDiskType": {
+            "value": "StandardSSD_LRS"
+        },
+        "vmUseManagedDisks": {
+            "value": true
+        },
+        "existingVnetName": {
+            "value": "az-use2-App-Prod01-vnet01"
+        },
+        "existingSubnetName": {
+            "value": "az-use2-App-Prod01-vnet01-WindowsVD"
+        },
+        "virtualNetworkResourceGroupName": {
+            "value": "rg-av-az-use2-App-Prod01-vnet01-372183"
+        },
+        "usePublicIP": {
+            "value": false
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "publicIpAddressType": {
+            "value": "Static"
+        },
+        "hostpoolType": {
+            "value": "pooled"
+        },
+        "personalDesktopAssignmentType": {
+            "value": "Automatic"
+        },
+        "maxSessionLimit": {
+            "value": 8
+        },
+        "loadBalancerType": {
+            "value": "DepthFirst"
+        },
+        "customRdpProperty": {
+            "value": "disableconnectionsharing:i:1;"
+        },
+        "vmTemplate": {
+            "value": ""
+        },
+        "tokenExpirationTime": {
+            "value": "2020-10-28T14:01:54.9571247Z"
+        },
+        "deploymentId": {
+            "value": ""
+        },
+        "validationEnvironment": {
+            "value": false
+        },
+        "preferredAppGroupType": {
+            "value": "Desktop"
+        },
+        "vmLocation": {
+            "value": "eastus2"
+        },
+        "ouPath": {
+            "value": "OU=WindowsVirtualDesktops,DC=Corporate,DC=rjet,DC=com"
+        },
+        "domain": {
+            "value": "corporate.rjet.com"
+        }
+    }
+}
