@@ -3,16 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "applicationName": {
-            "value": "s3rus"
+            "value": "neffwvd"
         },
         "location": {
             "value": "eastus2"
         },
         "storageSKU": {
             "value": "Standard_LRS"
-        },
-        "shareName": {
-            "value": "install"
         }
     }
 }

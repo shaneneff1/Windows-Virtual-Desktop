@@ -5,7 +5,7 @@
         "applicationName": {
             "type": "string",
             "metadata": {
-                "description": "Specifies the name of the key vault."
+                "description": "Specifies the name of the storage account."
             }
         },
         "location": {
@@ -16,12 +16,6 @@
         },
         "storageSKU": {
             "type": "string"
-        },
-        "shareName": {
-            "type": "string",
-            "metadata": {
-                "description": "Then name of the shared drive."
-            }
         }
     },
     "variables": {
@@ -59,18 +53,6 @@
                     },
                     "keySource": "Microsoft.Storage"
                 }
-            }
-        },
-        {
-            "name": "[concat(variables('storageAccountName'), '/default/', parameters('shareName'))]",
-            "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
-            "apiVersion": "2019-06-01",
-            "dependsOn": [
-                "[resourceId(concat('Microsoft.Storage/storageAccounts'), variables('storageAccountName'))]"
-            ],
-            "properties": {
-                "metadata": {},
-                "shareQuota": 5
             }
         }
     ]
