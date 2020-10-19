@@ -16,6 +16,12 @@
         },
         "storageSKU": {
             "type": "string"
+        },
+        "containerName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the name of the container."
+            }
         }
     },
     "variables": {
@@ -42,10 +48,6 @@
                 "supportsHttpsTrafficOnly": true,
                 "encryption": {
                     "services": {
-                        "file": {
-                            "keyType": "Account",
-                            "enabled": true
-                        },
                         "blob": {
                             "keyType": "Account",
                             "enabled": true
@@ -53,7 +55,18 @@
                     },
                     "keySource": "Microsoft.Storage"
                 }
-            }
+            },
+            "resources": [
+                {
+                    "name": "[concat('default/', parameters('containerName'))]",
+                    "type": "blobservices/containers",
+                    "apiVersion": "2019-06-01",
+                    "dependsOn": [
+                        "[variables('storageAccountName')]"
+                    ],
+                    "properties": {}
+                }
+            ]
         }
     ]
 }

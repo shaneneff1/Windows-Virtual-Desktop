@@ -10,6 +10,9 @@
         },
         "storageSKU": {
             "value": "Standard_LRS"
+        },
+        "containerName": {
+            "value": "nestedtemplates"
         }
     }
 }
