@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "hostpoolName": {
-            "value": "s3rushp1"
+            "value": "neffwvdhp1"
         },
         "hostpoolFriendlyName": {
-            "value": "s3rushp1"
+            "value": "neffwvdhp1"
         },
         "location": {
             "value": "eastus2"
@@ -18,10 +18,10 @@
             "value": ""
         },
         "workspaceResourceGroup": {
-            "value": "az-eus2-prod-s3cpo-rg"
+            "value": "NEFF-WVD-DEMO"
         },
         "workSpaceName": {
-            "value": "s3rus"
+            "value": "neffwvd"
         },
         "addToWorkspace": {
             "value": true
@@ -33,7 +33,7 @@
             "value": "https://sts3rus.blob.core.windows.net/artifacts/Configuration.zip?si=access&sv=2019-12-12&sr=b&sig=3WcCNQZX4VfqyEChj8geYoijVyIwm%2B%2B%2BC0lxUPmJ2%2Bo%3D"
         },
         "vmNamePrefix": {
-            "value": "s3rushp1"
+            "value": "neffwvdhp1"
         },
         "objectId": {
             "value": "97ddf66a-337f-4887-8989-f93778d3fb27"
@@ -48,7 +48,7 @@
             "value": "2019-12-10-preview"
         },
         "administratorAccountUsername": {
-            "value": "svc_wvd_domjoin@rjet.com"
+            "value": "xxx"
         },
         "administratorAccountPassword": {
             "reference": {
