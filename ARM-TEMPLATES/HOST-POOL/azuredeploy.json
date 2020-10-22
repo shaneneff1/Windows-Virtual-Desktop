@@ -19,7 +19,7 @@
             "metadata": {
                 "description": "The name of the workspace."
             },
-            "defaultValue": "neffwvd"
+            "defaultValue": "s3rus"
         },
         "hostpoolName": {
             "type": "string",
@@ -434,7 +434,6 @@
             "apiVersion": "[parameters('apiVersion')]",
             "type": "Microsoft.DesktopVirtualization/applicationgroups",
             "location": "[parameters('location')]",
-            "tags": "[parameters('applicationGroupTags')]",
             "properties": {
                 "hostpoolarmpath": "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostpoolName'))]",
                 "friendlyName": "Default Desktop",

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "applicationName": {
-            "value": "neffwvd"
+            "value": "S3RUS"
         },
         "certificatePermissions": {
             "value": [
@@ -57,7 +57,7 @@
         },
         "objectId": {
             "value": 
-                "727a337b-c89d-4682-968e-beb43def334d"
+                "1e2251b6-dc06-4de5-9724-ebc812689e63"
         },
         "secretsPermissions": {
             "value": [
@@ -74,7 +74,7 @@
             "value": "Standard"
         },
         "tenantId": {
-            "value": "6c637512-c417-4e78-9d62-b61258e4b619"
+            "value": "2ebb9fda-6f05-43ed-8507-e83c949691ac"
         }
     }
 }

@@ -3,19 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "applicationName": {
-            "value": "neffwvd"
+            "value": "s3rus"
         },
         "location": {
             "value": "eastus2"
         },
         "storageSKU": {
             "value": "Standard_LRS"
-        },
-        "containerName": {
-            "value": "nestedtemplates"
-        },
-        "containerName2": {
-            "value": "artifacts"
         }
     }
 }

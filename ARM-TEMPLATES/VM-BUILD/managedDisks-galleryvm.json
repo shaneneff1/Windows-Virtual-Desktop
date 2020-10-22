@@ -436,9 +436,8 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://stneffwvd.blob.core.windows.net/artifacts/install-application.ps1?si=access&sv=2019-12-12&sr=b&sig=Ej73MZM4LErcKKMeJrowFBmC71iFVOOQWS1YS31UP5U%3D"
-                    ],
-                    "timestamp": "123456789"
+                        "https://sts3rus.blob.core.windows.net/artifacts/install-application.ps1?si=access&sv=2019-12-12&sr=b&sig=Ej73MZM4LErcKKMeJrowFBmC71iFVOOQWS1YS31UP5U%3D"
+                    ]
                 },
                 "protectedSettings": {
                     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File install-application.ps1"

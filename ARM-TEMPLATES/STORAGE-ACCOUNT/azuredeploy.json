@@ -5,7 +5,7 @@
         "applicationName": {
             "type": "string",
             "metadata": {
-                "description": "Specifies the name of the storage account."
+                "description": "Specifies the name of the key vault."
             }
         },
         "location": {
@@ -16,18 +16,6 @@
         },
         "storageSKU": {
             "type": "string"
-        },
-        "containerName": {
-            "type": "string",
-            "metadata": {
-                "description": "Specifies the name of the container."
-            }
-        },
-        "containerName2": {
-            "type": "string",
-            "metadata": {
-                "description": "Specifies the name of the container."
-            }
         }
     },
     "variables": {
@@ -61,27 +49,7 @@
                     },
                     "keySource": "Microsoft.Storage"
                 }
-            },
-            "resources": [
-                {
-                    "name": "[concat('default/', parameters('containerName'))]",
-                    "type": "blobservices/containers",
-                    "apiVersion": "2019-06-01",
-                    "dependsOn": [
-                        "[variables('storageAccountName')]"
-                    ],
-                    "properties": {}
-                },
-                {
-                    "name": "[concat('default/', parameters('containerName2'))]",
-                    "type": "blobservices/containers",
-                    "apiVersion": "2019-06-01",
-                    "dependsOn": [
-                        "[variables('storageAccountName')]"
-                    ],
-                    "properties": {}
-                }
-            ]
+            }
         }
     ]
 }

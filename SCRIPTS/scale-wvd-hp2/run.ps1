@@ -58,7 +58,7 @@ $timeZone = "Eastern Standard Time"
 $peakDay = 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
 
 # Host Pool Name
-$hostPoolName = 'neffwvdhp2'
+$hostPoolName = 's3rushp2'
 
 # Session Host Resource Group
 # Session Hosts and Host Pools can exist in different Resource Groups, but are commonly the same

@@ -26,12 +26,11 @@
         }
     },
     "variables": {
-        "appServicePlanName": "[concat(variables('appName'), '-plan')]",
-        "functionName": "[concat(variables('appName'), '-func')]",
+        "appServicePlanName": "[concat(variables('appName'), '-again')]",
+        "functionName": "[concat(variables('appName'), '-again')]",
         "appName": "[parameters('applicationName')]",
-        "functionKind": "functionapp",
         "storResourceID": "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
-
+        "functionKind": "functionapp",
         "storageName": "[concat('st', parameters('applicationName'), 'func')]",
         "contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]"
     },
@@ -177,6 +176,32 @@
                 "minTlsVersion": "1.2",
                 "ftpsState": "AllAllowed",
                 "reservedInstanceCount": 0
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(variables('functionName'), '/TimerTrigger3')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', variables('functionName'))]"
+            ],
+            "properties": {
+                "name": "TimerTrigger3",
+                "script_root_path_href": "[concat('https://', variables('functionName'), '.azurewebsites.net/admin/vfs/site/wwwroot/TimerTrigger3/')]",
+                "script_href": "[concat('https://', variables('functionName'), '.azurewebsites.net/admin/vfs/site/wwwroot/TimerTrigger3/run.ps1')]",
+                "config_href": "[concat('https://', variables('functionName'), '.azurewebsites.net/admin/vfs/site/wwwroot/TimerTrigger3/function.json')]",
+                "href": "[concat('https://', variables('functionName'), '.azurewebsites.net/admin/functions/TimerTrigger3/')]",
+                "config": {
+                    "bindings": [
+                        {
+                            "name": "Timer",
+                            "type": "timerTrigger",
+                            "direction": "in",
+                            "schedule": "0 */5 * * * *"
+                        }
+                    ]
+                }
             }
         },
         {
