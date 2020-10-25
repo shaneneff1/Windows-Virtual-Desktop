@@ -436,7 +436,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://sts3rus.blob.core.windows.net/artifacts/install-application.ps1?si=access&sv=2019-12-12&sr=b&sig=Ej73MZM4LErcKKMeJrowFBmC71iFVOOQWS1YS31UP5U%3D"
+                        "https://sts3rus.blob.core.windows.net/artifacts/install-application.ps1?sp=racwdl&st=2020-10-25T01:16:07Z&se=2022-01-01T01:16:00Z&sv=2019-12-12&sr=b&sig=%2Bwcj%2FTyj4tE%2F9nXcwYd1tTiIrayCkjwenGaKnme%2BCy4%3D"
                     ]
                 },
                 "protectedSettings": {

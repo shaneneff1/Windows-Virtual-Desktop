@@ -386,7 +386,7 @@
         "Desktop Virtualization User": "[concat('/subscriptions/',parameters('subscriptionId'), '/providers/Microsoft.Authorization/roleDefinitions/', '1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63')]",
         "hostpoolFriendlyName": "[parameters('hostpoolFriendlyName')]",
         "vmTemplateName": "[concat( if(variables('rdshManagedDisks'), 'managedDisks', 'unmanagedDisks'), '-', toLower(replace(parameters('vmImageType'),' ', '')), 'vm')]",
-        "vmTemplateUri": "[concat(parameters('nestedTemplatesLocation'), variables('vmTemplateName'),'.json')]",
+        "vmTemplateUri": "[concat(parameters('nestedTemplatesLocation'), variables('vmTemplateName'),'.json', '?sp=racwdl&st=2020-10-25T00:41:37Z&se=2022-01-01T00:41:00Z&sv=2019-12-12&sr=b&sig=8AJ6Fe4Ne93Qvv1aIgUORTo7Qe7x2YIJemHSRZSTin8%3D')]",
         "rdshVmNamesOutput": {
             "copy": [
                 {

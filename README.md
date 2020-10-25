@@ -38,10 +38,10 @@ This solution is to deploy a [Windows Virtual Desktop](https://docs.microsoft.co
 
 ## REFERENCE SCRIPTS
 - **install-application.ps1:** script called by custom script extension ARM template resource (found in the 'resources' section of the "managedDisk-galleryvm.json. This script installs Notepad++ on target machines). **This file must be copied to storage account to allow it to be referenced by the template as the ADO project is not public and the decision was made to not reference external sources not owned/managed by Republic Air. This file is in source control. Once edited, changes committed to the master, the pipeline will file copy the installation script from the repository to the solution's BLOB storage account. 
-- **run.ps1:** This script will scale out and in based on capacity utilization of the VMs. There are four of these; one for each environment. 
+- **run.ps1:** This script will scale out and in based on capacity utilization of the VMs. There are four of these; one for each host pool. 
 - **stop-function-app.ps1** This is the first stage of the pipeline and this script stops all of the function apps that are hosting the VM scaling PowerShell script. The pipeline will fail if the VMs are powered off. All eight sessions hosts need to be powered on and that's not possible if the function is still operating at a five-minute trigger.
 - **start-vms.ps1** This is the second stage of the release pipeline and is used to ensure that all VMs are running. The pipeline will fail trying to update the VM, as these updates cannot be applied to a non-running VM.
-
+- **restart-function-apps.ps1** PowerShell script to restart all of the auto-scale function apps.
 
 ---
 ## REFERENCE: PIPELINE DOCUMENTATION
@@ -142,10 +142,10 @@ steps:
     csmParametersFile: '$(System.DefaultWorkingDirectory)/_S3RUS/ARM-TEMPLATES/HOST-POOL/azuredeploy.parameters.hostpool-1.json'
 ```
 
-1. "Host Pool 2 Deployment" (see step three)
-2. "Host Pool 3 Deployment" (see step three)
-3. "Host Pool 4 Deployment" (see step three)
-4. "Add Each Application Group to WVD Workspace" ARM template that deploys a Windows Virtual Desktop Workspace, that includes the Application Groups that have been assigned to each user.
+4. "Host Pool 2 Deployment" (see step three)
+5. "Host Pool 3 Deployment" (see step three)
+6. "Host Pool 4 Deployment" (see step three)
+7. "Add Each Application Group to WVD Workspace" ARM template that deploys a Windows Virtual Desktop Workspace, that includes the Application Groups that have been assigned to each user.
 
 ```json
         {
@@ -163,9 +163,14 @@ steps:
             }
         }
 ```
-
-
-
+8. Restart Scale Out/Scale In Function App- Simple PowerShell script that ensures all Function apps are powered on. 
+   
+```powershell 
+Restart-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp1-func
+Restart-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp2-func
+Restart-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp3-func
+Restart-AzWebApp -ResourceGroupName az-eus2-prod-s3cpo-rg -Name s3rushp4-func
+```
 
 ---
 
@@ -192,6 +197,60 @@ There are many reasons a pipeline run can fail. This section provides some infor
 
 ---
 
+## REFERENCE: CONFIGURE AUTO-SCALE POWERSHELL FUNCTION APP
+
+
+1. Go to each of the function apps  for this solution (there should be four- one for each host pool).
+2. Click on "functions" in the left pane
+   
+
+![function instructions](./images/s3rus-func1.png)
+
+1. Click on the + Add button
+2. In the add function menu, click on "Timer Trigger"
+
+![function instructions](./images/s3rus-func2.png)
+
+5. Accept the defaults (this will run on a five minute schedule)
+
+![function instructions](./images/s3rus-func3.png)
+
+6. Click "Create Function"
+7. Once the function is created, the "TimerTrigger1" function settings blade will open.
+
+![function instructions](./images/s3rus-func4.png)
+
+8. Click on "Code and Test"
+9. That will open a code editing window with the code associated with run.ps1. This is sample code. Select all of it and delete it.
+
+![function instructions](./images/s3rus-func5.png)
+
+10. Go to the project's repository and find the directory that contains the PowerShell for your function. Each host pool has its own function and the PowerShell script for each of them is in its respective directory.
+
+![function instructions](./images/s3rus-func6.png)
+
+11. Select the appropriate host pool run.ps1 and copy the entire text of the file to your clipboard
+12. Return to the function and paste the code into the coding window in the "code and test" section
+13. Click on "save"
+14. This will establish a connection and will take a couple of minutes
+15. Once this is complete you'll receive a connected message
+
+![function instructions](./images/s3rus-func8.png)
+
+16. Once that message is displayed, click on "Test/Run"
+
+![function instructions](./images/s3rus-func9.png)
+
+17. Click on run again
+18. In the log window, if successful, the following message will appear in the log window:
+
+![function instructions](./images/s3rus-func10.png)
+
+19. To ensure the function app is running correctly, wait 5+ minutes and return to the Azure Portal. Type "virtual machines" in the search bar. A list of all of the virtual machines and their status will be displayed
+
+![function instructions](./images/s3rus-func11.png)
+
+20. If both VMs in a host pool are still running, ensure you've waited the five minutes. 
 
 ## REFERENCE: USER ACCESS STRATEGY DOCUMENTATION
 

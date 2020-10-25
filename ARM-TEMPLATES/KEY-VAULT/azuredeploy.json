@@ -114,43 +114,7 @@
                 "networkAcls": {
                     "defaultAction": "deny",
                     "bypass": "AzureServices",
-                    "ipRules": [
-                        {
-                            "value": "107.139.218.54"
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('resourceName'), '/', 'ad-uid')]",
-            "apiVersion": "2015-06-01",
-            "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', variables('resourceName'))]"
-            ],
-            "tags": {},
-            "properties": {
-                "value": "test",
-                "contentType": "string",
-                "attributes": {
-                    "enabled": "true"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('resourceName'), '/', 'ad-pswd')]",
-            "apiVersion": "2015-06-01",
-            "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', variables('resourceName'))]"
-            ],
-            "tags": {},
-            "properties": {
-                "value": "test",
-                "contentType": "string",
-                "attributes": {
-                    "enabled": "true"
+                    "ipRules": []
                 }
             }
         }
