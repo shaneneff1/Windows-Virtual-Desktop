@@ -11,8 +11,11 @@
     "domainName": {
       "value": "wvddemo.local"
     },
+    "location": {
+      "value": "eastus2"
+    },
     "dnsPrefix": {
-      "value": "GEN-UNIQUE"
+      "value": "neffwvd"
     }
   }
 }
