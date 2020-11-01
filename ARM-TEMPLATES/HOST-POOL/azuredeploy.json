@@ -284,6 +284,12 @@
             },
             "defaultValue": {}
         },
+        "appGroupFriendlyName": {
+            "type": "string",
+            "metadata": {
+                "description": "Friendly Display Name for application group"
+            }
+        },
         "availabilitySetTags": {
             "type": "object",
             "metadata": {
@@ -436,7 +442,7 @@
             "location": "[parameters('location')]",
             "properties": {
                 "hostpoolarmpath": "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostpoolName'))]",
-                "friendlyName": "Default Desktop",
+                "friendlyName": "[parameters('appGroupFriendlyName')]",
                 "description": "Desktop Application Group created through the Hostpool Wizard",
                 "applicationGroupType": "Desktop"
             },

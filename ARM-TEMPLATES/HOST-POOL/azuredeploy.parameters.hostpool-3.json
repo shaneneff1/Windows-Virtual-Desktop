@@ -11,6 +11,9 @@
         "location": {
             "value": "eastus2"
         },
+        "appGroupFriendlyName": {
+            "value": "test2"
+        },
         "hostpoolDescription": {
             "value": "Pool of desktop resources"
         },
@@ -137,7 +140,7 @@
             "value": ""
         },
         "tokenExpirationTime": {
-            "value": "2020-10-28T14:01:54.9571247Z"
+            "value": "2020-11-27T14:01:54.9571247Z"
         },
         "deploymentId": {
             "value": ""

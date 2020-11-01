@@ -1,0 +1,4 @@
+Update-AzWvdDesktop -ResourceGroupName az-eus2-prod-s3cpo-rg -ApplicationGroupName s3rushp1-DAG -Name SessionDesktop -FriendlyName "Desktop Session 1"
+Update-AzWvdDesktop -ResourceGroupName az-eus2-prod-s3cpo-rg -ApplicationGroupName s3rushp2-DAG -Name SessionDesktop -FriendlyName "Desktop Session 2"
+Update-AzWvdDesktop -ResourceGroupName az-eus2-prod-s3cpo-rg -ApplicationGroupName s3rushp3-DAG -Name SessionDesktop -FriendlyName "Desktop Session 3"
+Update-AzWvdDesktop -ResourceGroupName az-eus2-prod-s3cpo-rg -ApplicationGroupName s3rushp4-DAG -Name SessionDesktop -FriendlyName "Desktop Session 4"
